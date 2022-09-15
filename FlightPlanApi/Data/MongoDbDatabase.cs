@@ -36,7 +36,7 @@ namespace FlightPlanApi.Data
                 return new FlightPlan();
             }
 
-            return new FlightPlan();
+            return flightPlan;
         }
 
         public async Task<bool> FileFlightPlan(FlightPlan flightPlan)
