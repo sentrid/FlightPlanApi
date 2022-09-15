@@ -1,4 +1,7 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using FlightPlanApi.Models;
 
@@ -36,51 +39,17 @@ namespace FlightPlanApi.Data
                 return new FlightPlan();
             }
 
-            return new FlightPlan();
+            return flightPlan;
         }
 
         public async Task<bool> FileFlightPlan(FlightPlan flightPlan)
         {
-            var collection = GetCollection("pluralsight", "flight_plans");
-
-            var document = new BsonDocument
-            {
-                {"flight_plan_id", Guid.NewGuid().ToString("N") },
-                {"altitude", flightPlan.Altitude },
-                {"airspeed", flightPlan.Airspeed },
-                {"aircraft_identification", flightPlan.AircraftIdentification },
-                {"aircraft_type", flightPlan.AircraftType },
-                {"arrival_airport", flightPlan.ArrivalAirport },
-                {"flight_type", flightPlan.FlightType },
-                {"departing_airport", flightPlan.DepartureAirport },
-                {"departure_time", flightPlan.DepartureTime },
-                {"estimated_arrival_time", flightPlan.ArrivalTime },
-                {"route", flightPlan.Route },
-                {"remarks", flightPlan.Remarks },
-                {"fuel_hours", flightPlan.FuelHours },
-                {"fuel_minutes", flightPlan.FuelMinutes },
-                {"number_onboard", flightPlan.NumberOnBoard }
-            };
-
-            try
-            {
-                await collection.InsertOneAsync(document);
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
+            
         }
 
         public async Task<bool> DeleteFlightPlanById(string flightPlanId)
         {
-            var collection = GetCollection("pluralsight", "flight_plans");
-            var result = await collection.DeleteOneAsync(
-                Builders<BsonDocument>.Filter.Eq("flight_plan_id", flightPlanId));
-
-            return result.DeletedCount > 0;
+            
         }
 
         public async Task<bool> UpdateFlightPlan(string flightPlanId, FlightPlan flightPlan)
